@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/Fola-Keep/static/js/main.22339358.chunk.js",
-    "main.js.map": "/Fola-Keep/static/js/main.22339358.chunk.js.map",
+    "main.js": "/Fola-Keep/static/js/main.422e2e59.chunk.js",
+    "main.js.map": "/Fola-Keep/static/js/main.422e2e59.chunk.js.map",
     "runtime-main.js": "/Fola-Keep/static/js/runtime-main.a8725a14.js",
     "runtime-main.js.map": "/Fola-Keep/static/js/runtime-main.a8725a14.js.map",
     "static/js/2.b9ecd4b5.chunk.js": "/Fola-Keep/static/js/2.b9ecd4b5.chunk.js",
@@ -12,6 +12,6 @@
   "entrypoints": [
     "static/js/runtime-main.a8725a14.js",
     "static/js/2.b9ecd4b5.chunk.js",
-    "static/js/main.22339358.chunk.js"
+    "static/js/main.422e2e59.chunk.js"
   ]
 }
