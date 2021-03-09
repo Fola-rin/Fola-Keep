@@ -58,9 +58,11 @@ function App() {
 			<AnimateSharedLayout>
 				<Router>
 					<Header />
-					<CreateArea />
-					<Route path={["/:id", "/"]} component={Home} />
-					{/* <Route path="/:id" component={Edit} /> */}
+					<div className="content">
+						<CreateArea />
+						<Route path={["/:id", "/"]} component={Home} />
+						{/* <Route path="/:id" component={Edit} /> */}
+					</div>
 					<Footer />
 				</Router>
 			</AnimateSharedLayout>

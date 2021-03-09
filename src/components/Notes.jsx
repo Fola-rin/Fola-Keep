@@ -6,11 +6,6 @@ import { motion } from "framer-motion";
 
 import noteContext from "../data";
 
-const noteDivStyle = {
-	overflow: "auto",
-	maxHeight: "70vh",
-};
-
 const Note = (props) => {
 	function handleClick(e) {
 		props.onDelete(props.id);
@@ -72,7 +67,7 @@ export const Notes = () => {
 		// setNotes(newNotes);
 	}
 	return (
-		<div style={noteDivStyle} key={`keyx`}>
+		<div key={`keyx`}>
 			{notes.map((noteItem, id) => {
 				return (
 					<Note

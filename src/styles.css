@@ -15,6 +15,9 @@ body {
 	background-image: url("https://www.transparenttextures.com/patterns/checkered-light-emboss.png");
 	/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 }
+.content {
+	min-height: 85vh;
+}
 a {
 	text-decoration: none;
 }
@@ -47,9 +50,7 @@ nav h2 {
 }
 
 footer {
-	position: absolute;
 	text-align: center;
-	bottom: 0;
 	width: 100%;
 	height: 2.5rem;
 }
