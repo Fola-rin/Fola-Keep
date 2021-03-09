@@ -1,14 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
 import Zoom from "@material-ui/core/Zoom";
-import FadeIn from "react-fade-in";
+import noteContext from "../data";
+import { Link } from "react-router-dom";
 
-function CreateArea(props) {
-	const [note, setNote] = useState({
+function CreateArea() {
+	const { notes, setNotes } = useContext(noteContext);
+
+	const [createNote, setCreateNote] = useState({
 		title: "",
 		content: "",
 	});
+
+	function addNote(newNote) {
+		setNotes((prevNotes) => {
+			console.log(prevNotes);
+			return [...prevNotes, newNote];
+		});
+	}
 
 	const [clickBool, setClickBool] = useState(false);
 	const [isNoteEmpty, noteEmptyState] = useState(true);
@@ -16,7 +26,7 @@ function CreateArea(props) {
 	function handleChange(event) {
 		const { name, value } = event.target;
 
-		setNote((prevNote) => {
+		setCreateNote((prevNote) => {
 			return {
 				...prevNote,
 				[name]: value,
@@ -28,12 +38,14 @@ function CreateArea(props) {
 	};
 
 	function submitNote(event) {
-		if (note.title === "" || note.content === "") {
+		if (createNote.title === "" || createNote.content === "") {
 			noteEmptyState(false);
 		} else {
+			const note = { id: notes.length + 1, ...createNote };
 			noteEmptyState(true);
-			props.onAdd(note);
-			setNote({
+			addNote(note);
+			console.log(note);
+			setCreateNote({
 				title: "",
 				content: "",
 			});
@@ -51,7 +63,7 @@ function CreateArea(props) {
 					<input
 						name="title"
 						onChange={handleChange}
-						value={note.title}
+						value={createNote.title}
 						placeholder="Title"
 					/>
 				)}
@@ -59,7 +71,7 @@ function CreateArea(props) {
 					onClick={textAreaClick}
 					name="content"
 					onChange={handleChange}
-					value={note.content}
+					value={createNote.content}
 					placeholder="Take a note..."
 					rows={clickBool ? "3" : "1"}
 				/>

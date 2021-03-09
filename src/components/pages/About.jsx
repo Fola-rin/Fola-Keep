@@ -1,8 +1,11 @@
 import { Fade } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import FadeIn from "react-fade-in";
+import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
+import styled from "styled-components";
 
 const About = () => {
+	const [selectedId, setSelectedId] = useState(null);
 	return (
 		<FadeIn>
 			<div className="About">

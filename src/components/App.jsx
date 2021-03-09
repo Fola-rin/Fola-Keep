@@ -1,69 +1,70 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Switch, Link, Route } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { AnimatedSwitch } from "react-router-transition";
 import FadeIn from "react-fade-in";
 import About from "./pages/About";
 import Header from "./Header";
 import Footer from "./Footer";
-import Note from "./Note";
+import { Notes } from "./Notes";
 import CreateArea from "./CreateArea";
+import "../styles.css";
+import { motion } from "framer-motion";
+import styledComponents from "styled-components";
+import { AnimateSharedLayout, AnimatePresence } from "framer-motion";
+import { EditNote } from "./EditNote";
+
+import noteContext from "../data";
+
+const items = [
+	{
+		id: 1,
+		title: "How to use FolaKeep",
+		content:
+			"1. Tap the bin icon to delete \n2. Tap the pen icon to edit \n3. Once youre done editing click the ✓ icon to save your changes",
+	},
+];
 
 function App() {
-	const [notes, setNotes] = useState([]);
+	const localData = localStorage.getItem("notes");
+	const [notes, setNotes] = useState(localData ? JSON.parse(localData) : items);
+	useEffect(() => {
+		localStorage.setItem("notes", JSON.stringify(notes));
+	}, [notes]);
 
-	function addNote(newNote) {
-		setNotes((prevNotes) => {
-			return [...prevNotes, newNote];
-		});
-	}
-
-	function deleteNote(id) {
-		setNotes((prevNotes) => {
-			return prevNotes.filter((noteItem, index) => {
-				return index !== id;
-			});
-		});
-	}
-	const noteDivStyle = {
-		overflow: "auto",
-		maxHeight: "7clear0vh",
+	const Edit = ({ match }) => {
+		// console.log(match);
+		//
 	};
-	const Home = () => (
-		<div>
-			<CreateArea onAdd={addNote} />
-			<div style={noteDivStyle}>
-				{notes.map((noteItem, index) => {
-					return (
-						<Note
-							key={index}
-							id={index}
-							title={noteItem.title}
-							content={noteItem.content}
-							onDelete={deleteNote}
-						/>
-					);
-				})}
-			</div>
-		</div>
-	);
-	return (
-		<Router>
+	const Home = ({ match }) => {
+		let address = match.params.id;
+		console.log(match);
+		let result = null;
+		if (address) {
+			result = notes.find((item) => item.id == address);
+		}
+
+		return (
 			<div>
-				<Header />
-				<AnimatedSwitch
-					atEnter={{ opacity: 0 }}
-					atLeave={{ opacity: 0 }}
-					atActive={{ opacity: 1 }}
-					className="switch-wrapper"
-				>
-					<div>
-						<Route path="/Fola-Keep" component={Home} exact />
-						<Route path="/about" component={About} />
-					</div>
-				</AnimatedSwitch>
-				<Footer />
+				<Notes />
+				{/* <AnimatePresence animate={{ duration: 3 }}> */}
+				{result && <EditNote id={result.id} />}
+				{/* </AnimatePresence> */}
 			</div>
-		</Router>
+		);
+	};
+
+	return (
+		<noteContext.Provider value={{ notes, setNotes }}>
+			<AnimateSharedLayout>
+				<Router>
+					<Header />
+					<CreateArea />
+					<Route path={["/:id", "/"]} component={Home} />
+					{/* <Route path="/:id" component={Edit} /> */}
+					<Footer />
+				</Router>
+			</AnimateSharedLayout>
+		</noteContext.Provider>
 	);
 }
 
